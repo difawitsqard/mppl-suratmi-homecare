@@ -8,7 +8,7 @@
                 <x-dashboard.sidebar-sub-item name="Sub Item" :link="route('dashboard.admin')" :route="['dashboard.admin']" />
             </x-dashboard.sidebar-item>
             <x-dashboard.sidebar-item name="Item" :link="route('dashboard.admin')" icon="bi bi-grid-fill" :route="['dashboard.admin']" />
-            <x-dashboard.sidebar-item name="Manajemen layanan" :link="route('dashboard.service-management')" icon="bi bi-grid-fill" :route="['dashboard.service-management']" />
+            <x-dashboard.sidebar-item name="Manajemen layanan" :link="route('dashboard.service-management.index')" icon="bi bi-grid-fill" :route="['dashboard.service-management.index']" />
         </ul>
     </aside>
     <!-- End Sidebar-->
