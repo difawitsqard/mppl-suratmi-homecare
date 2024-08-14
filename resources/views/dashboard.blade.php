@@ -4,6 +4,15 @@
         {{ __('Dashboard') }}
     </x-slot>
 
+    <div class="card">
+        @hasrole('admin')
+            admin nihh
+        @endhasrole
+        @role('superadmin')
+            superadmin nihh
+        @endrole
+    </div>
+
     <div class="col-xxl-4 col-md-6">
         <div class="card info-card sales-card">
 
