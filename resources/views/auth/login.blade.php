@@ -62,7 +62,7 @@
                             <div class="col-12">
                                 <p class="small mb-0">
                                     Belum Punya akun ?
-                                    <a href="pages-register.html">buat akun</a>
+                                    <a href="{{ route('register') }}">buat akun</a>
                                 </p>
                             </div>
                         </form>
