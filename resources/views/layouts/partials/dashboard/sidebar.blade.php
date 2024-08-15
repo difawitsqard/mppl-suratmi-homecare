@@ -9,6 +9,7 @@
             </x-dashboard.sidebar-item>
             <x-dashboard.sidebar-item name="Item" :link="route('dashboard.admin')" icon="bi bi-grid-fill" :route="['dashboard.admin']" />
             <x-dashboard.sidebar-item name="Manajemen layanan" :link="route('dashboard.service-management.index')" icon="bi bi-grid-fill" :route="['dashboard.service-management.index']" />
+            <x-dashboard.sidebar-item name="Manajemen Faq" :link="route('dashboard.faq-management.index')" icon="bi bi-list-check" :route="['dashboard.faq-management.index']" />
         </ul>
     </aside>
     <!-- End Sidebar-->

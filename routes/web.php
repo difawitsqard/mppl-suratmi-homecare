@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FaqManagementController;
 use App\Http\Controllers\ServiceManagementController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +29,9 @@ Route::middleware([
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::resource('service-management', ServiceManagementController::class);
+    });
+
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::resource('faq-management', FaqManagementController::class);
     });
 });
