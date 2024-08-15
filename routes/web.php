@@ -1,18 +1,12 @@
 <?php
 
 use App\Http\Controllers\FaqManagementController;
+use App\Http\Controllers\GalleryManagementController;
 use App\Http\Controllers\ServiceManagementController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('landingpage');
-});
-
-
-Route::group(['middleware' => ['role:admin']], function () {
-    Route::get('/dashboard/admin', function () {
-        return 'test';
-    })->name('dashboard.admin');
 });
 
 Route::middleware([
@@ -21,17 +15,29 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('dashboard.index');
     })->name('dashboard');
-    Route::get('/dashboard/admin', function () {
-        return 'test';
-    })->name('dashboard.admin');
 
-    Route::prefix('dashboard')->name('dashboard.')->group(function () {
-        Route::resource('service-management', ServiceManagementController::class);
+    // superadmin/admin
+    Route::group(['middleware' => ['role:superadmin|admin']], function () {
+        Route::prefix('dashboard')->name('dashboard.')->group(function () {
+            Route::resource('service-management', ServiceManagementController::class);
+            Route::resource('faq-management', FaqManagementController::class);
+            Route::resource('gallery-management', GalleryManagementController::class);
+        });
     });
 
-    Route::prefix('dashboard')->name('dashboard.')->group(function () {
-        Route::resource('faq-management', FaqManagementController::class);
+    // customer
+    Route::group(['middleware' => ['role:customer']], function () {
+        Route::prefix('dashboard')->name('dashboard.')->group(function () {
+            // Route::resource('service-management', ServiceManagementController::class);
+        });
+    });
+
+    // therapist
+    Route::group(['middleware' => ['role:therapist']], function () {
+        Route::prefix('dashboard')->name('dashboard.')->group(function () {
+            // Route::resource('service-management', ServiceManagementController::class);
+        });
     });
 });

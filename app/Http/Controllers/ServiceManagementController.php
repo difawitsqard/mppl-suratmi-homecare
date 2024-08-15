@@ -7,13 +7,11 @@ use App\Models\Service;
 
 class ServiceManagementController extends Controller
 {
-    public function __construct(private readonly Service $service)
-    {
-    }
+    public function __construct(private readonly Service $service) {}
 
     public function index()
     {
-        return view('service-management.index', [
+        return view('dashboard.service-management.index', [
             'services' => $this->service->getAll(),
         ]);
     }
@@ -50,5 +48,4 @@ class ServiceManagementController extends Controller
 
         return redirect()->route('dashboard.service-management.index');
     }
-
 }

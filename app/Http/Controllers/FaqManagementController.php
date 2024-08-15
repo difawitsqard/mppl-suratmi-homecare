@@ -23,7 +23,7 @@ class FaqManagementController extends Controller
         }
         $faqs->appends(['perPage' => $perPage]);
 
-        return view('faq-management.index', compact('faqs'));
+        return view('dashboard.faq-management.index', compact('faqs'));
     }
 
     /**
