@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
@@ -13,17 +14,13 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = [
-            'superadmin',
-            'admin',
-            'member',
-            'employee',
-        ];
+        // Roles yang akan diassign ke user
+        $roles = Role::pluck('name');
 
         foreach ($roles as $roleName) {
             // Buat user untuk setiap role
             $user = User::factory()->create([
-                'name' => ucfirst($roleName) . ' User',
+                'name' => ucfirst($roleName),
                 'email' => strtolower($roleName) . '@example.com',
             ]);
 
