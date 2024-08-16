@@ -15,8 +15,9 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Harga</th>
+                    <th scope="col">Deskripsi</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
@@ -61,7 +62,7 @@
                             <input type="text" class="form-control" id="name" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="price" class="form-label">Price</label>
+                            <label for="price" class="form-label">Harga</label>
                             <input type="number" class="form-control" id="price" name="price" required>
                         </div>
                         <div class="mb-3">
@@ -80,7 +81,7 @@
         <div class="modal-dialog">
             <div class="modal-content text-black">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editServiceModalLabel">Edit Service</h5>
+                    <h5 class="modal-title" id="editServiceModalLabel">Edit Layanan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -88,15 +89,15 @@
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
-                            <label for="edit-name" class="form-label">Name</label>
+                            <label for="edit-name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="edit-name" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="edit-price" class="form-label">Price</label>
+                            <label for="edit-price" class="form-label">Harga</label>
                             <input type="number" class="form-control" id="edit-price" name="price" required>
                         </div>
                         <div class="mb-3">
-                            <label for="edit-description" class="form-label">Description</label>
+                            <label for="edit-description" class="form-label">Deskirpsi</label>
                             <textarea class="form-control" id="edit-description" name="description" rows="3"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
