@@ -23,6 +23,7 @@ class ServiceManagementRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
             'description' => 'nullable|string',
         ];
     }
