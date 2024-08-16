@@ -1,12 +1,18 @@
-<div {{ $attributes->merge(['class' => 'md:grid md:grid-cols-3 md:gap-6']) }}>
-    <x-section-title>
-        <x-slot name="title">{{ $title }}</x-slot>
-        <x-slot name="description">{{ $description }}</x-slot>
-    </x-section-title>
+@props(['card' => true])
 
-    <div class="mt-5 md:mt-0 md:col-span-2">
-        <div class="px-4 py-5 sm:p-6 bg-white shadow sm:rounded-lg">
-            {{ $content }}
+<span>
+@if ($card)
+    <div {{ $attributes->merge(['class' => 'card']) }} style="overflow: auto;">
+        <div class="card-body">
+            <div class="container">
+                <h5 class="card-title">{{ $title }}</h5>
+                {{ $content }}
+            </div>
         </div>
     </div>
-</div>
+@else
+<h5 class="card-title">{{ $title }}</h5>
+{{ $content }}
+@endif
+
+</span>

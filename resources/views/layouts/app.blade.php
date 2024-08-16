@@ -46,7 +46,7 @@
             <x-dashboard.breadcrumb />
         </div><!-- End Page Title -->
 
-        <section class="section dashboard">
+        <section class="section">
             <div class="row">
                 {{ $slot }}
             </div>

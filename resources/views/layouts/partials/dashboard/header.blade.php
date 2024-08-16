@@ -41,7 +41,7 @@
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
+                    <img src="{{ auth()->user()->profile_photo_url }}" alt="Profile" width="36px" height="36px" class="rounded-circle">
                     <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->user()->name }}</span>
                 </a>
 
@@ -54,9 +54,9 @@
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route('profile.show') }}">
                             <i class="bi bi-gear"></i>
-                            <span>Account Settings</span>
+                            <span>Pengaturan Akun</span>
                         </a>
                     </li>
                     <li>
@@ -68,7 +68,7 @@
                             <a class="dropdown-item d-flex align-items-center" href="#"
                                 onclick="event.preventDefault();this.closest('form').submit();">
                                 <i class="bi bi-box-arrow-right"></i>
-                                <span> {{ __('Log Out') }}</span>
+                                <span> {{ __('Keluar') }}</span>
                             </a>
                         </li>
                     </form>
