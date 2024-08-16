@@ -25,6 +25,7 @@
                     <tr>
                         <th scope="row">{{ $service->id }}</th>
                         <td>{{ $service->name }}</td>
+                        <td>{{ $service->price }}</td>
                         <td>{{ $service->description }}</td>
                         <td>
                             <a href="#" class="btn btn-warning edit-service-btn" data-bs-toggle="modal"
@@ -89,6 +90,10 @@
                         <div class="mb-3">
                             <label for="edit-name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="edit-name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="edit-price" name="price" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-description" class="form-label">Description</label>
