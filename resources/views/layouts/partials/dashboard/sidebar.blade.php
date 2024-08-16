@@ -19,6 +19,14 @@
 
         @endif
 
+        @if(auth()->user()->hasRole('customer'))
+            <x-dashboard.sidebar-item name="Dashboard" :link="route('dashboard')" icon="bi bi-grid"
+                                      :route="['dashboard']"/>
+            <li class="nav-heading">Menu</li>
+            <x-dashboard.sidebar-item name="Pemesanan" :link="route('dashboard.order-service.index')" icon="bi bi-chat-left"
+                                      :route="['dashboard.order-service.index']"/>
+        @endif
+
 
 
         <li class="nav-heading">Pengaturan</li>
