@@ -68,6 +68,8 @@
     <!-- Template Main JS File -->
     <script src="{{ asset('_dashboard/assets/js/main.js') }}"></script>
 
+    @vite('resources/js/app.js')
+
     @stack('scripts')
 </body>
 
