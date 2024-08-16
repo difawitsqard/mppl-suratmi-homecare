@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('services', function (Blueprint $table) {
-            $table->decimal('price', 10)->after('name');
+            $table->integer('price',)->after('name');
         });
     }
 
@@ -21,5 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('services', function (Blueprint $table) {
+            $table->dropColumn('price');
+        });
     }
 };
