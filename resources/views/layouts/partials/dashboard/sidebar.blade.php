@@ -1,7 +1,8 @@
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
-        @if(auth()->user()->hasRole('admin', 'superadmin'))
+
+        @if(auth()->user()->hasRole(['admin', 'superadmin']))
             <x-dashboard.sidebar-item name="Dashboard" :link="route('dashboard')" icon="bi bi-grid"
                                       :route="['dashboard']"/>
             <li class="nav-heading">Menu</li>
