@@ -3,11 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,6 +54,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'created_at_formatted'
     ];
 
     /**
@@ -88,10 +91,23 @@ class User extends Authenticatable
      */
     protected function defaultProfilePhotoUrl()
     {
-        $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
-            return mb_substr($segment, 0, 1);
-        })->join(' '));
-
         return asset('_dashboard\assets\img\avatar.jpg');
+    }
+
+    protected function getCreatedAtFormattedAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])->translatedFormat('d F Y H:i');
+    }
+
+    public function scopeFilter(Builder $query)
+    {
+        $columns = ['name', 'email', 'address', 'phone_number'];
+        $query->when(request('search'), function ($query, $search) use ($columns) {
+            $query->where(function ($query) use ($columns, $search) {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'like', '%' . $search . '%');
+                }
+            });
+        });
     }
 }
