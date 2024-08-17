@@ -15,7 +15,6 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         // Membuat roles
         $roles = [
-            'superadmin',
             'admin',
             'therapist',
             'customer',
