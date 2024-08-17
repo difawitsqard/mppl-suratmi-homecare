@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\FaqManagementController;
 use App\Http\Controllers\GalleryManagementController;
+use App\Http\Controllers\OrderServiceController;
 use App\Http\Controllers\ServiceManagementController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,7 +38,7 @@ Route::middleware([
     // customer
     Route::group(['middleware' => ['role:customer']], function () {
         Route::prefix('dashboard')->name('dashboard.')->group(function () {
-            // Route::resource('service-management', ServiceManagementController::class);
+            Route::resource('order-service', OrderServiceController::class);
         });
     });
 
