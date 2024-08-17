@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\FaqManagementController;
 use App\Http\Controllers\GalleryManagementController;
 use App\Http\Controllers\ServiceManagementController;
@@ -18,9 +19,15 @@ Route::middleware([
         return view('dashboard.index');
     })->name('dashboard');
 
-    // superadmin/admin
-    Route::group(['middleware' => ['role:superadmin|admin']], function () {
+    // admin
+    Route::group(['middleware' => ['role:admin']], function () {
         Route::prefix('dashboard')->name('dashboard.')->group(function () {
+            Route::get('user-management/role/{role}', [UserManagementController::class, 'getUsersByRole'])
+                ->name('user-management.role');
+
+            Route::resource('user-management', UserManagementController::class)
+                ->except(['store', 'create']);
+
             Route::resource('service-management', ServiceManagementController::class);
             Route::resource('faq-management', FaqManagementController::class);
             Route::resource('gallery-management', GalleryManagementController::class);
