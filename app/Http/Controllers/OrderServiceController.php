@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderServiceRequest;
+use App\Models\OrderService;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class OrderServiceController extends Controller
@@ -11,54 +14,16 @@ class OrderServiceController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.order-service.index', [
+            'services' => Service::all(),
+            'orderedServices' => OrderService::with('service')->get(),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(OrderServiceRequest $request)
     {
-        //
-    }
+        OrderService::create($request->validated());
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('dashboard.order-service.index');
     }
 }
