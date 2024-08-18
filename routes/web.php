@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\UserManagementController;
-use App\Http\Controllers\FaqManagementController;
-use App\Http\Controllers\GalleryManagementController;
-use App\Http\Controllers\OrderServiceController;
-use App\Http\Controllers\ServiceManagementController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderServiceController;
+use App\Http\Controllers\FaqManagementController;
+use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\OrderManagementController;
+use App\Http\Controllers\GalleryManagementController;
+use App\Http\Controllers\ServiceManagementController;
 
 Route::get('/', function () {
     return view('landingpage');
@@ -23,9 +24,13 @@ Route::middleware([
     // admin
     Route::group(['middleware' => ['role:admin']], function () {
         Route::prefix('dashboard')->name('dashboard.')->group(function () {
+            Route::patch('order-management/{id}/status', [OrderManagementController::class, 'updateStatus'])
+                ->name('order-management.status');
+            Route::resource('order-management', OrderManagementController::class)
+                ->only(['index', 'show', 'updateStatus']);
+
             Route::get('user-management/role/{role}', [UserManagementController::class, 'getUsersByRole'])
                 ->name('user-management.role');
-
             Route::resource('user-management', UserManagementController::class)
                 ->except(['store', 'create']);
 
