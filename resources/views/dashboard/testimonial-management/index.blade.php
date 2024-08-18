@@ -98,7 +98,7 @@
                                             alt="{{ $Testimonial->orderService->user->name }}" width="40px"
                                             height="40px" class="rounded-circle shadow-sm" style="object-fit: cover;">
                                         <span
-                                            class="ps-3 fw-normal"><b>{{ $Testimonial->orderService->user->name }}</b><i></br>{{  ucwords($Testimonial->orderService->user->roles[0]->name) }}</i></span>
+                                            class="ps-3 fw-normal"><b>{{ $Testimonial->orderService->user->name }}</b><i></br>{{ ucwords($Testimonial->orderService->user->roles[0]->name) }}</i></span>
                                     </div>
                                 </th>
                                 <td class="align-middle">{{ $Testimonial->content }}</td>
@@ -145,7 +145,7 @@
                     </div>
                     <div class="modal-body bg-white">
                         <div class="d-flex flex-column align-items-center mt-0">
-                            <input name="rating-detail" class="rating-detail" type="text" style="display: none;"/>
+                            <input name="rating-detail" class="rating-detail" type="text" style="display: none;" />
                         </div>
                         <div class="row g-3 mt-3">
                             <div class="col-md-6">
@@ -165,17 +165,18 @@
                         </div>
                         <div class="mb-3 mt-0 text-center">
                             <label for="testimoni_content" class="form-label fw-bold">Ulasan</label>
-                            <textarea class="form-control" id="testimoni_content" name="testimoni_content" placeholder="..." rows="4" style="text-align: center;"></textarea>
+                            <textarea class="form-control" id="testimoni_content" name="testimoni_content" placeholder="..." rows="4"
+                                style="text-align: center;"></textarea>
                         </div>
-                        </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
+
             </div>
+        </div>
         </div>
     @endpush
 
@@ -230,8 +231,9 @@
                             .then(response => response.json())
                             .then(data => {
                                 profileName.textContent = data.order_service.user.name;
-                                profileRole.textContent = data.order_service.user.roles[0].name.replace(/^\w/, c => c
-                                .toUpperCase());;
+                                profileRole.textContent = data.order_service.user.roles[0].name
+                                    .replace(/^\w/, c => c
+                                        .toUpperCase());;
                                 profileImage.src = data.order_service.user.profile_photo_url;
 
                                 ratingInput.value = data.rating;
