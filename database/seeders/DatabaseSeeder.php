@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesAndPermissionsSeeder::class,
             UserSeeder::class,
+            ServiceSeeder::class,
+            OrderServiceSeeder::class,
         ]);
 
         Faq::factory(50)->create();
