@@ -15,10 +15,10 @@ class OrderManagementController extends Controller
     {
         $perPage = is_numeric($request->perPage) ? $request->perPage :  10;
         if (!empty($request->search)) {
-            $OrderServices = OrderService::filter()->orderBy('date', 'desc')->paginate($perPage);
+            $OrderServices = OrderService::filter()->orderBy('created_at', 'desc')->paginate($perPage);
             $OrderServices->appends(['search' => $request->search]);
         } else {
-            $OrderServices = OrderService::orderBy('date', 'desc')->paginate($perPage);
+            $OrderServices = OrderService::orderBy('created_at', 'desc')->paginate($perPage);
         }
         $OrderServices->load('service', 'user');
         $OrderServices->appends(['perPage' => $perPage]);
