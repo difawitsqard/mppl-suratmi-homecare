@@ -24,6 +24,8 @@
             <x-dashboard.sidebar-item name="Manajemen Galeri" :link="route('dashboard.gallery-management.index')" icon="bi bi-image"
                 :route="['dashboard.gallery-management.index']" />
 
+            <x-dashboard.sidebar-item name="Ulasan Pelanggan" :link="route('dashboard.testimonial-management.index')" icon="bi bi-star" :route="['dashboard.testimonial-management.index']" />
+
         @endif
 
         @if (auth()->user()->hasRole('customer'))

@@ -7,6 +7,7 @@ use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\OrderManagementController;
 use App\Http\Controllers\GalleryManagementController;
 use App\Http\Controllers\ServiceManagementController;
+use App\Http\Controllers\TestimonialManagemController;
 
 Route::get('/', function () {
     return view('landingpage');
@@ -28,6 +29,9 @@ Route::middleware([
                 ->name('order-management.status');
             Route::resource('order-management', OrderManagementController::class)
                 ->only(['index', 'show', 'updateStatus']);
+
+            Route::resource('testimonial-management', TestimonialManagemController::class)
+                ->only(['index', 'show']);
 
             Route::get('user-management/role/{role}', [UserManagementController::class, 'getUsersByRole'])
                 ->name('user-management.role');
