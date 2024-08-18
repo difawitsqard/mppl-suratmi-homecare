@@ -70,6 +70,9 @@ class User extends Authenticatable
         ];
     }
 
+
+    protected $with = ['roles'];
+
     /**
      * Get the URL to the user's profile photo.
      *
@@ -102,7 +105,7 @@ class User extends Authenticatable
     public function scopeFilter(Builder $query)
     {
         $columns = ['name', 'email', 'address', 'phone_number'];
-        $query->when(request('search'), function ($query, $search) use ($columns) {
+        $query->when(request('search') ?? false, function ($query, $search) use ($columns) {
             $query->where(function ($query) use ($columns, $search) {
                 foreach ($columns as $column) {
                     $query->orWhere($column, 'like', '%' . $search . '%');

@@ -22,7 +22,6 @@ class UserManagementController extends Controller
         } else {
             $users = User::orderBy('id', 'desc')->paginate($perPage);
         }
-        $users->load('roles');
         $users->appends(['perPage' => $perPage]);
 
         return view('dashboard.user-management.index', [
@@ -98,7 +97,6 @@ class UserManagementController extends Controller
         } else {
             $users = User::role($role)->orderBy('id', 'desc')->paginate($perPage);
         }
-        $users->load('roles');
         $users->appends(['perPage' => $perPage]);
 
         return view('dashboard.user-management.index', [
