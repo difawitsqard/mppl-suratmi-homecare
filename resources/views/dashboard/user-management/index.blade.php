@@ -67,7 +67,7 @@
                         <form action="{{ request()->fullUrlWithoutQuery(['page']) }}" method="GET">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="search" placeholder="Cari..."
-                                    {{ !empty(request()->search) ? 'value=' . request()->search . '' : '' }}>
+                                    {{ !empty(request()->input('search')) ? 'value=' . request()->input('search') . '' : '' }}>
                                 <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                             </div>
                         </form>
@@ -101,7 +101,7 @@
                                 <td class="align-middle">{{ $user->email }}</td>
                                 <td class="align-middle">{{ $user->phone_number }}</td>
                                 <td class="align-middle text-muted fst-italic fw-bolder">
-                                        {{ ucwords($user->roles->first()->name) }}
+                                        {{ isset($user->roles[0]->name) ? ucwords($user->roles[0]->name) : 'Unknown' }}
                                 </td>
                                 <td class="align-middle">
                                     <div class="d-flex align-items-center gap-2">

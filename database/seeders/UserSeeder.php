@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\OrderService;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
@@ -29,7 +30,7 @@ class UserSeeder extends Seeder
         }
 
         //fake
-        User::factory(50)->create()->each(function ($user) use ($roles) {
+        User::factory(51)->create()->each(function ($user) use ($roles) {
             $user->assignRole($roles->random());
         });
     }
