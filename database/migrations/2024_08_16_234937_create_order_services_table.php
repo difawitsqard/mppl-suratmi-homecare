@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('order_services', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->foreignId('service_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('note')->nullable();
             $table->date('date');
             $table->string('status')->default('pending');
+            $table->timestamps();
         });
     }
 
