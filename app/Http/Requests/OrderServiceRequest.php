@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OrderServiceRequest extends FormRequest
@@ -21,11 +22,14 @@ class OrderServiceRequest extends FormRequest
      */
     public function rules(): array
     {
+        $validStatuses = ['pending', 'approved', 'completed', 'rejected', 'canceled'];
+
         return [
+            'user_id' => 'required|exists:users,id',
             'service_id' => 'required|exists:services,id',
             'note' => 'nullable|string',
-            'date' => 'required|date',
-            'status' => 'string',
+            'date' => 'required|date|after_or_equal:now',
+            'status' => ['string', Rule::in($validStatuses)],
         ];
     }
 }

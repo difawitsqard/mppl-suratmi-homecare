@@ -21,7 +21,7 @@ class OrderServiceFactory extends Factory
         return [
             'service_id' => Service::factory(),
             'user_id' => User::factory(),
-            'date' => fake()->dateTimeBetween('2024-07-01', '2025-12-30')->format('Y-m-d'),
+            'date' => fake()->dateTimeBetween('2024-07-01', '2025-12-30'),
             'status' => fake()->randomElement(['pending', 'approved', 'completed', 'canceled', 'rejected']),
             'note' => fake()->sentence(),
         ];

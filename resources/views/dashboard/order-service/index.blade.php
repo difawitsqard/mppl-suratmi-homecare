@@ -51,6 +51,7 @@
                 <div class="modal-body">
                     <form action="{{ route('dashboard.order-service.store') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                         <div class="mb-3">
                             <label for="select-service" class="form-label">Layanan</label>
                             <select class="form-select" aria-label="Default select example" id="select-service" name="service_id">

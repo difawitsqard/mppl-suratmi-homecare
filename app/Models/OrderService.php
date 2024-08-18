@@ -51,7 +51,7 @@ class OrderService extends Model
 
     public function getDateFormatAttribute()
     {
-        return Carbon::parse($this->date)->format('d F Y');
+        return Carbon::parse($this->date)->translatedFormat('d F Y H:i');
     }
 
     public function service()
