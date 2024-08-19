@@ -177,7 +177,7 @@
                                     <div class="mb-3">
                                         <label for="role" class="form-label">Role</label>
                                         <select id="role" class="form-select" name="role">
-                                            <option>Pilih Role...</option>
+                                            <option disabled>Pilih Role...</option>
                                             @foreach ($roles as $role)
                                                 <option value="{{ $role->id }}">{{ ucwords($role->name) }}</option>
                                             @endforeach

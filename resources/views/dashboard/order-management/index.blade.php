@@ -81,7 +81,7 @@
                             <th scope="col">Pelanggan</th>
                             <th scope="col">ID</th>
                             <th scope="col">Layanan</th>
-                            <th scope="col">Tanggal</th>
+                            <th scope="col">Tgl Booking</th>
                             <th scope="col">Status</th>
                             <th scope="col">Aksi</th>
                         </tr>
@@ -108,28 +108,28 @@
                                     <x-dashboard.status-order-badge :status="$OrderService->status" />
                                 </td>
 
-                                <td class="align-middle">
-                                    <div class="d-flex align-items-center gap-2">
+                                <td class="align-middle text-nowrap">
+                                    <div class="d-flex align-items-center gap-1">
                                         @if ($OrderService->status == 'pending')
-                                            <button type="button" class="btn btn-success change-status"
+                                            <button type="button" class="btn btn-success btn-sm change-status"
                                                 data-id="{{ $OrderService->id }}" data-status="approved"
                                                 data-url="{{ route('dashboard.order-management.status', $OrderService->id) }}">
                                                 <i class="bi bi-check2"></i>
                                             </button>
-                                            <button type="button" class="btn btn-danger change-status"
+                                            <button type="button" class="btn btn-danger btn-sm change-status"
                                                 data-id="{{ $OrderService->id }}" data-status="rejected"
                                                 data-url="{{ route('dashboard.order-management.status', $OrderService->id) }}">
                                                 <i class="bi bi-x"></i>
                                             </button>
                                         @endif
                                         @if ($OrderService->status == 'approved')
-                                            <button type="button" class="btn btn-success change-status"
+                                            <button type="button" class="btn btn-success btn-sm change-status"
                                                 data-id="{{ $OrderService->id }}" data-status="completed"
                                                 data-url="{{ route('dashboard.order-management.status', $OrderService->id) }}">
                                                 <i class="bi bi-check2-circle"></i> Selesai
                                             </button>
                                         @endif
-                                        <button type="button" class="btn btn-primary show-button"
+                                        <button type="button" class="btn btn-primary btn-sm show-button"
                                             data-bs-toggle="modal" data-bs-target="#MyModal"
                                             data-id="{{ $OrderService->id }}"
                                             data-url="{{ route('dashboard.order-management.show', $OrderService->id) }}">
