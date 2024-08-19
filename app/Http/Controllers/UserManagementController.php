@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UserManagementController extends Controller
@@ -24,9 +25,16 @@ class UserManagementController extends Controller
         }
         $users->appends(['perPage' => $perPage]);
 
+        $currentUser = Auth::user();
+
+        /** @var \App\Models\User $currentUser */
+        $roles = Role::when(!$currentUser->hasRole('superadmin'), function ($query) {
+            return $query->where('name', '!=', 'superadmin');
+        })->get();
+
         return view('dashboard.user-management.index', [
             'users' => $users,
-            'roles' => Role::all(),
+            'roles' => $roles,
             'role' => 'All',
         ]);
     }
@@ -63,8 +71,21 @@ class UserManagementController extends Controller
 
         $role = Role::findOrFail($validatedData['role']);
         $user = User::findOrFail($id);
-        $user->syncRoles($role);
 
+        /** @var \App\Models\User $currentUser */
+        $currentUser = Auth::user();
+
+        if ($user->hasRole('superadmin') && !$currentUser->hasRole('superadmin')) {
+            return redirect()->back()->withErrors(['role' => 'Hanya superadmin yang dapat mengubah peran pengguna superadmin.']);
+        }
+
+        if ($role->name === 'superadmin') {
+            if (!$currentUser->hasRole('superadmin')) {
+                return redirect()->back()->withErrors(['role' => 'Hanya superadmin yang dapat menetapkan peran superadmin.']);
+            }
+        }
+
+        $user->syncRoles($role);
         return redirect()->back()->with('success', 'Role "' . $user->name . '" has been updated to "' . $role->name . '".');
     }
 
@@ -86,9 +107,16 @@ class UserManagementController extends Controller
     {
         $perPage = is_numeric($request->perPage) ? $request->perPage :  10;
 
+        /** @var \App\Models\User $currentUser */
+        $currentUser = Auth::user();
+
         // Periksa apakah role yang diberikan ada
         if (!Role::where('name', $role)->exists()) {
             abort(404);
+        }
+
+        if ($role == 'superadmin' && !$currentUser->hasRole('superadmin')) {
+            abort(403);
         }
 
         if (!empty($request->search)) {
@@ -99,9 +127,13 @@ class UserManagementController extends Controller
         }
         $users->appends(['perPage' => $perPage]);
 
+        $roles = Role::when(!$currentUser->hasRole('superadmin'), function ($query) {
+            return $query->where('name', '!=', 'superadmin');
+        })->get();
+
         return view('dashboard.user-management.index', [
             'users' => $users,
-            'roles' => Role::all(),
+            'roles' => $roles,
             'role' => $role,
         ]);
     }

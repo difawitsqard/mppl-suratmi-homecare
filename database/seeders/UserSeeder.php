@@ -16,9 +16,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // Roles yang akan diassign ke user
-        $roles = Role::pluck('name')->reject(function ($role) {
-            return in_array($role, ['superadmin']);
-        });
+        $roles = Role::pluck('name');
 
         foreach ($roles as $roleName) {
             // Buat user untuk setiap role
@@ -30,6 +28,10 @@ class UserSeeder extends Seeder
             // Assign role ke user
             $user->assignRole($roleName);
         }
+
+        $roles = $roles->reject(function ($role) {
+            return in_array($role, ['superadmin']);
+        });
 
         //fake
         User::factory(51)->create()->each(function ($user) use ($roles) {

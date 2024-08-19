@@ -23,14 +23,19 @@ Route::middleware([
         return view('dashboard.index');
     })->name('dashboard');
 
-    // admin
-    Route::group(['middleware' => ['role:admin']], function () {
+    // Superadmin
+    Route::group(['middleware' => ['role:superadmin']], function () {
         Route::prefix('dashboard')->name('dashboard.')->group(function () {
-
             Route::put('company-info/create_or_update', [CompanyInfoController::class, 'CreateOrUpdate'])
                 ->name('company-info.create_or_update');
             Route::resource('company-info', CompanyInfoController::class)
                 ->only(['index']);
+        });
+    });
+
+    // admin
+    Route::group(['middleware' => ['role:admin|superadmin']], function () {
+        Route::prefix('dashboard')->name('dashboard.')->group(function () {
 
             Route::patch('order-management/{id}/status', [OrderManagementController::class, 'updateStatus'])
                 ->name('order-management.status');
