@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\CompanyInfoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CompanyInfoController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\OrderServiceController;
 use App\Http\Controllers\FaqManagementController;
 use App\Http\Controllers\UserManagementController;
@@ -10,9 +11,7 @@ use App\Http\Controllers\GalleryManagementController;
 use App\Http\Controllers\ServiceManagementController;
 use App\Http\Controllers\TestimonialManagemController;
 
-Route::get('/', function () {
-    return view('landingpage');
-});
+Route::get('/', [LandingPageController::class, 'index'])->name('landingpage');
 
 Route::middleware([
     'auth:sanctum',
