@@ -16,7 +16,9 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // Roles yang akan diassign ke user
-        $roles = Role::pluck('name');
+        $roles = Role::pluck('name')->reject(function ($role) {
+            return in_array($role, ['superadmin']);
+        });
 
         foreach ($roles as $roleName) {
             // Buat user untuk setiap role
