@@ -52,7 +52,7 @@
 
         <div class="branding d-flex align-items-cente">
             <div class="container position-relative d-flex align-items-center justify-content-between">
-                <a href="{{ route('dashboard') }}" class="logo d-flex align-items-center">
+                <a href="{{ route('landingpage') }}" class="logo d-flex align-items-center">
                     <!-- Uncomment the line below if you also wish to use an image logo -->
                     <!-- <img src="{{ asset('_landingpage/assets/img/logo.png') }}" alt=""> -->
                     <h1 class="sitename">{{ $companyInfo->name ?? 'Company Name' }}</h1>
@@ -438,7 +438,7 @@
         <div class="container footer-top">
             <div class="row gy-4">
                 <div class="col-lg-6 col-md-6 footer-about">
-                    <a href="{{ route('dashboard') }}" class="d-flex align-items-center">
+                    <a href="{{ route('landingpage') }}" class="d-flex align-items-center">
                         <span class="sitename">Suratmi Homecare</span>
                     </a>
                     <div class="footer-contact pt-3">
