@@ -1,4 +1,6 @@
 import "./bootstrap";
+import ApexCharts from 'apexcharts'
+window.ApexCharts = ApexCharts
 
 document.addEventListener("DOMContentLoaded", function () {
     // Select all forms
