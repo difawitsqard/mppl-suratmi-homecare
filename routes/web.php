@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyInfoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderServiceController;
 use App\Http\Controllers\FaqManagementController;
@@ -25,6 +26,12 @@ Route::middleware([
     // admin
     Route::group(['middleware' => ['role:admin']], function () {
         Route::prefix('dashboard')->name('dashboard.')->group(function () {
+
+            Route::put('company-info/create_or_update', [CompanyInfoController::class, 'CreateOrUpdate'])
+                ->name('company-info.create_or_update');
+            Route::resource('company-info', CompanyInfoController::class)
+                ->only(['index']);
+
             Route::patch('order-management/{id}/status', [OrderManagementController::class, 'updateStatus'])
                 ->name('order-management.status');
             Route::resource('order-management', OrderManagementController::class)

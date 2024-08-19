@@ -25,26 +25,25 @@
                 :route="['dashboard.gallery-management.index']" />
 
             <x-dashboard.sidebar-item name="Ulasan Pelanggan" :link="route('dashboard.testimonial-management.index')" icon="bi bi-star" :route="['dashboard.testimonial-management.index']" />
-
+            <li class="nav-heading">Pengaturan</li>
+            <x-dashboard.sidebar-item name="Informasi Perusahaan" :link="route('dashboard.company-info.index')" icon="bi bi-buildings"
+                :route="['dashboard.company-info.index']" />
         @endif
 
         @if (auth()->user()->hasRole('customer'))
             <x-dashboard.sidebar-item name="Pemesanan" :link="route('dashboard.order-service.index')" icon="bi bi-chat-left" :route="['dashboard.order-service.index']" />
         @endif
 
-        <li class="nav-heading">Pengaturan</li>
+        <li class="nav-heading">Akun</li>
         <x-dashboard.sidebar-item name="Pengaturan Akun" :link="route('profile.show')" icon="bi bi-gear" :route="['profile.show']" />
 
-        <form method="POST" action="{{ route('logout') }}" x-data>
-            @csrf
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="https://suratmi-homecare.com/logout"
-                    onclick="event.preventDefault();this.closest('form').submit();">
-                    <i class="bi bi-box-arrow-right"></i>
-                    <span>Keluar</span>
-                </a>
-            </li>
-        </form>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="modal" data-bs-target="#LogoutModal">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Keluar</span>
+            </a>
+        </li>
+
     </ul>
 </aside>
 <!-- End Sidebar-->
