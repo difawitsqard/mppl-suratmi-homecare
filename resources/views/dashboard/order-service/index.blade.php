@@ -32,7 +32,7 @@
                         <td>{{ $order->service->price }}</td>
                         <td>{{ $order->date }}</td>
                         <td>{{ $order->note }}</td>
-                        <td>{{ $order->status }}</td>
+                        <td><x-dashboard.status-order-badge :status="$order->status" /></td>
                     </tr>
                 @endforeach
                 </tbody>
