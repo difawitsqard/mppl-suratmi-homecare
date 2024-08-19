@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>Dashboard - {{ config('app.name', 'Laravel') }}</title>
+    <title>{{ auth()->user()->roles->first()->name ? ucwords(auth()->user()->roles->first()->name) : 'Dashboard' }} - {{ getCompanyInfo()->short_name ?? getCompanyInfo()->name ?? 'This Company'}}</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -57,6 +57,28 @@
     <!-- End #main -->
 
     <div style="color: #212529;">
+        <div class="modal fade" id="LogoutModal" tabindex="-1" aria-labelledby="LogoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="LogoutModalLabel">Konfirmasi !</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                        <div class="modal-body bg-white">
+                            <h5>Hei <b>{{ auth()->user()->name }} !</b></h5>
+                            <p>Apakah anda yakin ingin keluar ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                            <form method="POST" action="{{ route('logout') }}" x-data>
+                                @csrf
+                                <button type="submit" class="btn btn-danger" onclick="event.preventDefault();this.closest('form').submit();">Ya, keluar</button>
+                            </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+
         @stack('modals')
     </div>
 

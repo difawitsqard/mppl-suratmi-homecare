@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ isset($title) ? $title . ' - ' : '' }}{{ getCompanyInfo()->short_name ?? getCompanyInfo()->name ?? 'This Company'}}</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
@@ -23,7 +23,6 @@
     <!-- Vendor CSS Files -->
     <link href="{{ asset('_dashboard/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('_dashboard/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet" />
-    <link href="{{ asset('_dashboard/assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet" />
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('_dashboard/assets/css/style.css') }}" rel="stylesheet" />

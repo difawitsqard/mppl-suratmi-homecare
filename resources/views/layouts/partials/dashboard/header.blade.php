@@ -1,9 +1,11 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="" class="logo d-flex align-items-center">
-            <img src="{{ asset('_dashboard/assets/img/logo.png') }}" alt="">
-            <span class="d-none d-lg-block">{{ config('app.name', 'Laravel') }}</span>
+        <a href="" class="logo d-flex align-items-center justify-content-center pe-4">
+            <img src="{{ asset('_dashboard/assets/img/logo.png') }}">
+            <span class="d-none d-lg-block ms-1" style="max-width: 235px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 22px;">
+                {{ getCompanyInfo()->name ?? 'This Company'}}
+            </span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
@@ -62,16 +64,12 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <form method="POST" action="{{ route('logout') }}" x-data>
-                        @csrf
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#"
-                                onclick="event.preventDefault();this.closest('form').submit();">
+                            <a class="dropdown-item d-flex align-items-center" href="#"  data-bs-toggle="modal" data-bs-target="#LogoutModal">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span> {{ __('Keluar') }}</span>
                             </a>
                         </li>
-                    </form>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
