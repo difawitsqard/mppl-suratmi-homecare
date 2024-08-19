@@ -16,7 +16,9 @@ class OrderServiceController extends Controller
     {
         return view('dashboard.order-service.index', [
             'services' => Service::all(),
-            'orderedServices' => OrderService::with('service')->get(),
+            'orderedServices' => OrderService::with('service')
+                ->where('user_id', auth()->id())
+                ->get(),
         ]);
     }
 
