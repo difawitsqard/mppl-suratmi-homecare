@@ -22,9 +22,10 @@ class DatabaseSeeder extends Seeder
             ServiceSeeder::class,
             OrderServiceSeeder::class,
             TestimonialSeeder::class,
+            GallerySeeder::class,
         ]);
 
-        Faq::factory(50)->create();
+        Faq::factory(11)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',

@@ -17,6 +17,20 @@ class Gallery extends Model
         'image_path',
     ];
 
+    protected $appends = [
+        'image_url',
+    ];
+
+    public function getImageUrlAttribute()
+    {
+        $filePath = public_path('uploads/' . $this->image_path);
+        if (file_exists($filePath)) {
+            return asset('uploads/' . $this->image_path);
+        } else {
+            return asset('images/placeholder-image.webp');
+        }
+    }
+
     public function scopeFilter(Builder $query)
     {
         $query->when(request('search'), function ($query, $search) {

@@ -93,7 +93,7 @@
                                      {{-- <a href="#"><img style="max-width: 100px;" src="{{ Storage::url($galleri->image_path) }}" alt=""></a> --}}
                                     <a href="#">
                                         <img class="rounded mx-auto d-block" style="width: 80px; height: 80px; object-fit: cover;"
-                                             src="{{ asset('uploads/' . $galleri->image_path) }}"
+                                             src="{{ $galleri->image_url }}"
                                              alt="{{ $galleri->title }}">
                                     </a>
                                 </th>
