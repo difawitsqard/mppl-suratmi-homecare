@@ -20,6 +20,7 @@ class OrderServiceController extends Controller
             'orderedServices' => OrderService::with('service')
                 ->with('testimonial')
                 ->where('customer_id', auth()->id())
+                ->orderBy('created_at', 'desc')
                 ->get(),
         ]);
     }
