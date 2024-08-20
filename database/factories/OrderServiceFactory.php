@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\User;
 use App\Models\Service;
+use App\Models\OrderService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,10 +21,22 @@ class OrderServiceFactory extends Factory
     {
         return [
             'service_id' => Service::factory(),
-            'user_id' => User::factory(),
+            'customer_id' => User::factory(),
+            'therapist_id' => null,
             'date' => fake()->dateTimeBetween('2024-07-01', '2025-12-30'),
             'status' => fake()->randomElement(['pending', 'approved', 'completed', 'canceled', 'rejected']),
             'note' => fake()->sentence(),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (OrderService $orderService) {
+            if ($orderService->status !== 'pending') {
+                $orderService->update([
+                    'therapist_id' => User::role('therapist')->get()->random()->id,
+                ]);
+            }
+        });
     }
 }

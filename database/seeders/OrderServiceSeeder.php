@@ -16,8 +16,8 @@ class OrderServiceSeeder extends Seeder
     public function run(): void
     {
         OrderService::factory(50)->recycle([
-            User::role('customer')->get(),
             Service::all(),
+            User::role('customer')->get(),
         ])->create();
     }
 }

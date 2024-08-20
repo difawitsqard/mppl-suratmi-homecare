@@ -233,10 +233,10 @@
                         @foreach ($testimonials as $testimoni)
                             <div class="swiper-slide">
                                 <div class="testimonial-item">
-                                    <img src="{{ asset($testimoni->OrderService->user->profile_photo_url) }}"
-                                        class="testimonial-img" alt="{{ $testimoni->OrderService->user->name }}" />
-                                    <h3>{{ $testimoni->OrderService->user->name }}</h3>
-                                    <h4>{{ $testimoni->OrderService->user->roles[0]->name }}</h4>
+                                    <img src="{{ asset($testimoni->OrderService->customer->profile_photo_url) }}"
+                                        class="testimonial-img" alt="{{ $testimoni->OrderService->customer->name }}" />
+                                    <h3>{{ $testimoni->OrderService->customer->name }}</h3>
+                                    <h4>{{ $testimoni->OrderService->customer->roles[0]->name }}</h4>
                                     <div class="stars">
                                         @for ($i = 0; $i < $testimoni->rating; $i++)
                                             <i class="bi bi-star-fill"></i>

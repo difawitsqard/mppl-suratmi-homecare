@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 class OrderManagementController extends Controller
 {
@@ -20,11 +22,12 @@ class OrderManagementController extends Controller
         } else {
             $OrderServices = OrderService::orderBy('created_at', 'desc')->paginate($perPage);
         }
-        $OrderServices->load('service', 'user');
+        $OrderServices->load('service', 'customer', 'therapist');
         $OrderServices->appends(['perPage' => $perPage]);
 
         return view('dashboard.order-management.index', [
             'OrderServices' => $OrderServices,
+            'therapists' => User::role('therapist')->get()
         ]);
     }
 
@@ -42,7 +45,7 @@ class OrderManagementController extends Controller
     public function show(string $id)
     {
         $OrderService = OrderService::findOrFail($id);
-        $OrderService->load('service', 'user');
+        $OrderService->load('service', 'customer', 'therapist');
         return response()->json($OrderService);
     }
 
@@ -66,14 +69,22 @@ class OrderManagementController extends Controller
     {
         $validStatuses = ['pending', 'approved', 'completed', 'rejected', 'canceled'];
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'status' => ['required', 'string', Rule::in($validStatuses)],
+            'therapist_id' => ['required_if:status,approved', 'exists:users,id']
         ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => $validator->errors()->first()], 400);
+        }
 
         $order = OrderService::findOrFail($id);
         $order->status = $request->status;
+        if ($request->status === 'approved') {
+            $order->therapist_id = $request->therapist_id;
+        }
         $order->save();
 
-        return  response()->json(['status' => 'success', 'message' => 'Status updated successfully']);
+        return response()->json(['status' => 'success', 'message' => 'Status updated successfully']);
     }
 }

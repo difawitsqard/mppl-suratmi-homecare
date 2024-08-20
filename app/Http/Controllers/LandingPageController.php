@@ -17,7 +17,8 @@ class LandingPageController extends Controller
         $services = Service::all();
         $testimonials = Testimonial::where('rating', 5)
             ->with([
-                'orderService.user.roles',
+                'orderService.customer.roles',
+                'orderService.therapist.roles',
                 'orderService.service'
             ])
             ->orderBy('created_at', 'desc')

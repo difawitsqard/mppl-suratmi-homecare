@@ -113,4 +113,14 @@ class User extends Authenticatable
             });
         });
     }
+
+    public function customerOrders()
+    {
+        return $this->hasMany(OrderService::class, 'customer_id', 'id');
+    }
+
+    public function therapistOrders()
+    {
+        return $this->hasMany(OrderService::class, 'therapist_id', 'id');
+    }
 }

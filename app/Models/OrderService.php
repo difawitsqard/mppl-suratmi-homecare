@@ -13,7 +13,8 @@ class OrderService extends Model
     use HasFactory, HasRoles;
 
     protected $fillable = [
-        'user_id',
+        'customer_id',
+        'therapist_id',
         'service_id',
         'note',
         'date',
@@ -64,18 +65,26 @@ class OrderService extends Model
         return $this->hasOne(Testimonial::class);
     }
 
-    public function user()
+    public function customer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'customer_id', 'id');
+    }
+
+    public function therapist()
+    {
+        return $this->belongsTo(User::class, 'therapist_id', 'id');
     }
 
     public function scopeFilter(Builder $query)
     {
         $query->when(request('search') ?? false, function ($query, $search) {
             $query->where(function ($query) use ($search) {
-                $query->whereHas('user', function ($query) use ($search) {
+                $query->whereHas('customer', function ($query) use ($search) {
                     $query->where('name', 'like', '%' . $search . '%');
                 })
+                    ->orWhereHas('therapist', function ($query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%');
+                    })
                     ->orWhereHas('service', function ($query) use ($search) {
                         $query->where('name', 'like', '%' . $search . '%');
                     });

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('order_services', function (Blueprint $table) {
             $table->id();
             $table->foreignId('service_id')->constrained();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('therapist_id')->nullable()->constrained('users')->onDelete('set null');
             $table->text('note')->nullable();
             $table->dateTime('date');
             $table->string('status')->default('pending');
