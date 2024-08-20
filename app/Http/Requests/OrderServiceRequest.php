@@ -25,11 +25,18 @@ class OrderServiceRequest extends FormRequest
         $validStatuses = ['pending', 'approved', 'completed', 'rejected', 'canceled'];
 
         return [
-            'user_id' => 'required|exists:users,id',
+            'customer_id' => 'required|exists:users,id',
             'service_id' => 'required|exists:services,id',
             'note' => 'nullable|string',
             'date' => 'required|date|after_or_equal:now',
             'status' => ['string', Rule::in($validStatuses)],
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'customer_id' => auth()->id(),
+        ]);
     }
 }
