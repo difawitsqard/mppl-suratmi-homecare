@@ -44,7 +44,7 @@
                             <x-dashboard.status-order-badge :status="$order->status"/>
                         </td>
                         <td>
-                            @if($order->status === 'completed')
+                            @if($order->status === 'completed' && $order->testimonial === null)
                                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ratingModal">
                                     Rating
                                 </button>
