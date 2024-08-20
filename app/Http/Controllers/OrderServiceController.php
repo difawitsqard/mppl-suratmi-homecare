@@ -19,7 +19,7 @@ class OrderServiceController extends Controller
             'services' => Service::all(),
             'orderedServices' => OrderService::with('service')
                 ->with('testimonial')
-                ->where('user_id', auth()->id())
+                ->where('customer_id', auth()->id())
                 ->get(),
         ]);
     }
