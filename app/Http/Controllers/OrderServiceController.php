@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrderServiceRequest;
 use App\Models\OrderService;
 use App\Models\Service;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class OrderServiceController extends Controller
@@ -25,6 +26,17 @@ class OrderServiceController extends Controller
     public function store(OrderServiceRequest $request)
     {
         OrderService::create($request->validated());
+
+        return redirect()->route('dashboard.order-service.index');
+    }
+
+    public function rating(Request $request, $oderServiceId)
+    {
+        Testimonial::created([
+            'order_service_id' => $oderServiceId,
+            'rating' => $request->rating,
+            'content' => $request->review,
+        ]);
 
         return redirect()->route('dashboard.order-service.index');
     }

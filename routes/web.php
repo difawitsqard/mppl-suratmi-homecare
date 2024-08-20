@@ -58,6 +58,8 @@ Route::middleware([
     Route::group(['middleware' => ['role:customer']], function () {
         Route::prefix('dashboard')->name('dashboard.')->group(function () {
             Route::resource('order-service', OrderServiceController::class);
+            Route::post('order-service/{order_service}/rating', [OrderServiceController::class, 'rating'])
+                ->name('order-service.rating');
         });
     });
 
