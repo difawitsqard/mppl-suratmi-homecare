@@ -110,7 +110,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('dashboard.order-service.store') }}" method="POST">
+                    <form action="{{ route('dashboard.order-service.rating', [
+                        'order_service' => $order->id
+                        ]) }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label for="note" class="form-label">Rating</label>
