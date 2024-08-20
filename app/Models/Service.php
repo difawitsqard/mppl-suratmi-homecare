@@ -15,8 +15,15 @@ class Service extends Model
         'price',
     ];
 
-    public function getAll()
+    public function scopeFilter($query)
     {
-        return self::all();
+        $columns = ['name', 'description'];
+        $query->when(request('search') ?? false, function ($query, $search) use ($columns) {
+            $query->where(function ($query) use ($columns, $search) {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'like', '%' . $search . '%');
+                }
+            });
+        });
     }
 }
