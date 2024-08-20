@@ -28,7 +28,7 @@ class Testimonial extends Model
                 foreach ($columns as $column) {
                     $query->orWhere($column, 'like', '%' . $search . '%');
                 }
-            })->orWhereHas('orderService.user', function ($query) use ($search) {
+            })->orWhereHas('orderService.customer', function ($query) use ($search) {
                 $query->where('name', 'like', '%' . $search . '%');
             });
         });

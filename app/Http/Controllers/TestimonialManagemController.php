@@ -14,10 +14,10 @@ class TestimonialManagemController extends Controller
     {
         $perPage = is_numeric($request->perPage) ? $request->perPage :  10;
         if (!empty($request->search)) {
-            $Testimonials = Testimonial::filter()->with(['orderService.user'])->orderBy('created_at', 'desc')->paginate($perPage);
+            $Testimonials = Testimonial::filter()->with(['orderService.customer'])->orderBy('created_at', 'desc')->paginate($perPage);
             $Testimonials->appends(['search' => $request->search]);
         } else {
-            $Testimonials = Testimonial::with(['orderService.user'])->orderBy('created_at', 'desc')->paginate($perPage);
+            $Testimonials = Testimonial::with(['orderService.customer'])->orderBy('created_at', 'desc')->paginate($perPage);
         }
         $Testimonials->appends(['perPage' => $perPage]);
 
@@ -39,7 +39,7 @@ class TestimonialManagemController extends Controller
      */
     public function show(string $id)
     {
-        $Testimonial = Testimonial::with(['orderService.user', 'orderService.service'])->findOrFail($id);
+        $Testimonial = Testimonial::with(['orderService.customer', 'orderService.service'])->findOrFail($id);
         return response()->json($Testimonial);
     }
 

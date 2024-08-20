@@ -94,11 +94,11 @@
                                     {{ $Testimonials->firstItem() + $num }}</th>
                                 <th class="align-middle text">
                                     <div class="d-flex align-items-center pe-0">
-                                        <img src="{{ $Testimonial->orderService->user->profile_photo_url }}"
-                                            alt="{{ $Testimonial->orderService->user->name }}" width="40px"
+                                        <img src="{{ $Testimonial->orderService->customer->profile_photo_url }}"
+                                            alt="{{ $Testimonial->orderService->customer->name }}" width="40px"
                                             height="40px" class="rounded-circle shadow-sm" style="object-fit: cover;">
                                         <span
-                                            class="ps-3 fw-normal"><b>{{ $Testimonial->orderService->user->name }}</b><i></br>{{ ucwords($Testimonial->orderService->user->roles[0]->name) }}</i></span>
+                                            class="ps-3 fw-normal"><b>{{ $Testimonial->orderService->customer->name }}</b><i></br>{{ ucwords($Testimonial->orderService->customer->roles[0]->name) }}</i></span>
                                     </div>
                                 </th>
                                 <td class="align-middle">{{ $Testimonial->content }}</td>
@@ -230,11 +230,11 @@
                         fetch(url)
                             .then(response => response.json())
                             .then(data => {
-                                profileName.textContent = data.order_service.user.name;
-                                profileRole.textContent = data.order_service.user.roles[0].name
+                                profileName.textContent = data.order_service.customer.name;
+                                profileRole.textContent = data.order_service.customer.roles[0].name
                                     .replace(/^\w/, c => c
                                         .toUpperCase());;
-                                profileImage.src = data.order_service.user.profile_photo_url;
+                                profileImage.src = data.order_service.customer.profile_photo_url;
 
                                 ratingInput.value = data.rating;
                                 orderIdInput.value = data.id;
