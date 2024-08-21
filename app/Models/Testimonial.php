@@ -15,6 +15,13 @@ class Testimonial extends Model
 
     protected $dates = ['created_at'];
 
+    protected $fillable = [
+        'content',
+        'rating',
+        'order_service_id',
+        'created_at',
+    ];
+
     public function orderService()
     {
         return $this->belongsTo(OrderService::class);
