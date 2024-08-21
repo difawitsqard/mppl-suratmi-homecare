@@ -17,7 +17,7 @@
                 @endforeach
             </x-dashboard.sidebar-item>
 
-            <x-dashboard.sidebar-item name="Manajemen layanan" :link="route('dashboard.service-management.index')" icon="bi bi-grid-fill"
+            <x-dashboard.sidebar-item name="Manajemen Layanan" :link="route('dashboard.service-management.index')" icon="bi bi-box"
                 :route="['dashboard.service-management.index']" />
             <x-dashboard.sidebar-item name="Manajemen FAQ" :link="route('dashboard.faq-management.index')" icon="bi bi-list-check" :route="['dashboard.faq-management.index']" />
             <x-dashboard.sidebar-item name="Manajemen Galeri" :link="route('dashboard.gallery-management.index')" icon="bi bi-image" :route="['dashboard.gallery-management.index']" />
@@ -32,7 +32,12 @@
         @endrole
 
         @if (auth()->user()->hasRole('customer'))
-            <x-dashboard.sidebar-item name="Pemesanan" :link="route('dashboard.order-service.index')" icon="bi bi-chat-left" :route="['dashboard.order-service.index']" />
+            <x-dashboard.sidebar-item name="Pesan Layanan" :link="route('dashboard.order-service.index')" icon="bi bi-chat-left" :route="['dashboard.order-service.index']" />
+            <x-dashboard.sidebar-item name="Riwayat Pesanan" :link="route('dashboard.order-service.history')" icon="bi bi-clock-history" :route="['dashboard.order-service.history']" />
+        @endif
+
+        @if (auth()->user()->hasRole('therapist'))
+            <x-dashboard.sidebar-item name="Orderan Costumer" :link="route('dashboard.customer-orders.index')" icon="bi bi-chat-left" :route="['dashboard.customer-orders.index']" />
         @endif
 
         <li class="nav-heading">Akun</li>

@@ -38,7 +38,7 @@ Route::middleware([
             Route::patch('order-management/{id}/status', [OrderManagementController::class, 'updateStatus'])
                 ->name('order-management.status');
             Route::resource('order-management', OrderManagementController::class)
-                ->only(['index', 'show', 'updateStatus']);
+                ->only(['index', 'show']);
 
             Route::resource('testimonial-management', TestimonialManagemController::class)
                 ->only(['index', 'show']);
@@ -57,7 +57,10 @@ Route::middleware([
     // customer
     Route::group(['middleware' => ['role:customer']], function () {
         Route::prefix('dashboard')->name('dashboard.')->group(function () {
-            Route::resource('order-service', OrderServiceController::class);
+            Route::get('order-service/history', [OrderServiceController::class, 'history'])
+                ->name('order-service.history');
+            Route::resource('order-service', OrderServiceController::class)
+                ->only(['index', 'store', 'show', 'update']);
             Route::post('order-service/{order_service}/rating', [OrderServiceController::class, 'rating'])
                 ->name('order-service.rating');
         });
@@ -66,7 +69,9 @@ Route::middleware([
     // therapist
     Route::group(['middleware' => ['role:therapist']], function () {
         Route::prefix('dashboard')->name('dashboard.')->group(function () {
-            // Route::resource('service-management', ServiceManagementController::class);
+            Route::patch('customer-orders/{id}/status', [OrderManagementController::class, 'updateStatus'])->name('customer-orders.update-status');
+            Route::resource('customer-orders', OrderManagementController::class)
+                ->only(['index', 'show']);
         });
     });
 });
