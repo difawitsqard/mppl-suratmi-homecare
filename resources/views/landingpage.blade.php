@@ -134,6 +134,58 @@
         </section>
         <!-- /About Section -->
 
+        <!-- comunity Section -->
+        <section id="comunity" class="clients section">
+            <div class="container section-title mb-0 pb-4" data-aos="fade-up">
+                <h2>Komunitas</h2>
+                <p>
+                    <span class="description-title">{{ $companyInfo->name ?? 'Company Name' }}</span>
+                    <br>
+                    <span>Anggota Dari Komunitas</span>
+                </p>
+            </div>
+            <div class="container">
+
+                <div class="swiper swiper-comunity init-swiper">
+
+                    <div class="swiper-wrapper align-items-center">
+                        <div class="swiper-slide"><img
+                                src="{{ asset('_dashboard/assets/img/comunity/logo (1).jpeg') }}" class="img-fluid">
+                        </div>
+                        <div class="swiper-slide"><img
+                                src="{{ asset('_dashboard/assets/img/comunity/logo (2).jpeg') }}" class="img-fluid">
+                        </div>
+                        <div class="swiper-slide"><img
+                                src="{{ asset('_dashboard/assets/img/comunity/logo (3).jpeg') }}" class="img-fluid">
+                        </div>
+                        <div class="swiper-slide"><img
+                                src="{{ asset('_dashboard/assets/img/comunity/logo (4).jpeg') }}" class="img-fluid">
+                        </div>
+                        <div class="swiper-slide"><img
+                                src="{{ asset('_dashboard/assets/img/comunity/logo (5).jpeg') }}" class="img-fluid">
+                        </div>
+                        <div class="swiper-slide"><img
+                                src="{{ asset('_dashboard/assets/img/comunity/logo (6).jpeg') }}" class="img-fluid">
+                        </div>
+                        <div class="swiper-slide"><img
+                                src="{{ asset('_dashboard/assets/img/comunity/logo (7).jpeg') }}" class="img-fluid">
+                        </div>
+                        <div class="swiper-slide"><img
+                                src="{{ asset('_dashboard/assets/img/comunity/logo (8).jpeg') }}" class="img-fluid">
+                        </div>
+                        <div class="swiper-slide"><img
+                                src="{{ asset('_dashboard/assets/img/comunity/logo (9).jpeg') }}" class="img-fluid">
+                        </div>
+                        <div class="swiper-slide"><img
+                                src="{{ asset('_dashboard/assets/img/comunity/logo (10).jpeg') }}" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section><!-- /Clients Section -->
+
         <!-- Services Section -->
         <section id="services" class="services section light-background">
             <!-- Section Title -->
@@ -189,7 +241,7 @@
                             <div class="pricing-item">
                                 {{-- <span class="advanced">Komplit</span> --}}
                                 <h3>{{ $service->name }}</h3>
-                                <h4><sup>Rp</sup>{{ number_format($service->price, 0, ',', '.')  }}</h4>
+                                <h4><sup>Rp</sup>{{ number_format($service->price, 0, ',', '.') }}</h4>
                                 {{-- <ul>
                                 <li>Bekam</li>
                                 <li>Kretek</li>
@@ -213,28 +265,14 @@
                 alt="" />
 
             <div class="container" data-aos="fade-up" data-aos-delay="100">
-                <div class="swiper init-swiper">
-                    <script type="application/json" class="swiper-config">
-              {
-                "loop": true,
-                "speed": 600,
-                "autoplay": {
-                  "delay": 5000
-                },
-                "slidesPerView": "auto",
-                "pagination": {
-                  "el": ".swiper-pagination",
-                  "type": "bullets",
-                  "clickable": true
-                }
-              }
-            </script>
+                <div class="swiper-testimoni swiper init-swiper">
                     <div class="swiper-wrapper">
                         @foreach ($testimonials as $testimoni)
                             <div class="swiper-slide">
                                 <div class="testimonial-item">
                                     <img src="{{ asset($testimoni->OrderService->customer->profile_photo_url) }}"
-                                        class="testimonial-img" alt="{{ $testimoni->OrderService->customer->name }}" />
+                                        class="testimonial-img"
+                                        alt="{{ $testimoni->OrderService->customer->name }}" />
                                     <h3>{{ $testimoni->OrderService->customer->name }}</h3>
                                     <h4>{{ $testimoni->OrderService->customer->roles[0]->name }}</h4>
                                     <div class="stars">
@@ -285,9 +323,9 @@
                                 <div class="portfolio-info">
                                     <h4>{{ $galleri->title }}</h4>
                                     <p>{{ $galleri->description }}</p>
-                                    <a href="{{ $galleri->image_url }}"
-                                        title="{{ $galleri->title }}" data-gallery="gallery-{{ $galleri->id }}"
-                                        class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                                    <a href="{{ $galleri->image_url }}" title="{{ $galleri->title }}"
+                                        data-gallery="gallery-{{ $galleri->id }}" class="glightbox preview-link"><i
+                                            class="bi bi-zoom-in"></i></a>
                                 </div>
                             </div>
                         @endforeach
@@ -490,6 +528,60 @@
 
     <!-- Main JS File -->
     <script src="{{ asset('_landingpage/assets/js/main.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            new Swiper('.swiper-comunity', {
+                loop: true,
+                speed: 600,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false
+                },
+                slidesPerView: 'auto',
+                pagination: {
+                    el: '.swiper-comunity .swiper-pagination',
+                    type: 'bullets',
+                    clickable: true,
+                    dynamicBullets: true
+                },
+                breakpoints: {
+                    320: {
+                        slidesPerView: 2,
+                        spaceBetween: 40
+                    },
+                    480: {
+                        slidesPerView: 3,
+                        spaceBetween: 60
+                    },
+                    640: {
+                        slidesPerView: 4,
+                        spaceBetween: 80
+                    },
+                    992: {
+                        slidesPerView: 6,
+                        spaceBetween: 120
+                    }
+                }
+            });
+
+            new Swiper('.swiper-testimoni', {
+                loop: true,
+                speed: 600,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false
+                },
+                slidesPerView: 1,
+                pagination: {
+                    el: '.swiper-testimoni .swiper-pagination',
+                    type: 'bullets',
+                    clickable: true
+                }
+            });
+
+        });
+    </script>
 </body>
 
 </html>
