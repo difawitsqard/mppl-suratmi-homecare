@@ -1,160 +1,141 @@
 <x-app-layout>
-
     <x-slot name="header">
-        {{ __('Service Management') }}
+        {{ __('Order Service') }}
     </x-slot>
 
-    @push('styles')
-        <link href="{{ asset('assets/_module/kartik-v-bootstrap-star-rating/css/star-rating.css') }}" media="all"
-              rel="stylesheet" type="text/css"/>
-        <link href="{{ asset('assets/_module/kartik-v-bootstrap-star-rating/themes/krajee-svg/theme.min.css') }}"
-              media="all" rel="stylesheet" type="text/css"/>
+    <div class="col-xl-6">
+        @if (auth()->user()->address == null || auth()->user()->phone_number == null)
+            <div class="card">
+                <div class="card-header text-danger fw-bold">Perhatian !</div>
+                <div class="card-body">
+                    <p class="card-text mt-3">Lengkapi data diri anda terlebih dahulu sebelum melakukan pemesanan
+                        layanan.</p>
+                </div>
+                <div class="card-footer text-end">
+                    <a href="{{ route('profile.show') }}" class="btn btn-primary">Pengaturan Akun</a>
+                </div>
+            </div>
+        @else
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    @if ($errors->any())
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible mb-4 fade show"
+                            role="alert">
+                            @if ($errors->count() > 1)
+                                <b>Upps !</b> An error occurred while entering data.
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <b>Upps!</b> {{ $errors->first() }}
+                            @endif
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session('success'))
+                        <div class="alert alert-success bg-success text-light border-0 alert-dismissible mb-4 fade show"
+                            role="alert">
+                            <b>Ok!</b> {{ session('success') }}
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+                    <form class="row g-3" action="{{ route('dashboard.order-service.store') }}" method="POST">
+                        @csrf
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <select class="form-select" id="service_id" name="service_id" aria-label="service_id">
+                                    <option selected="" disabled>Pilih Layanan</option>
+                                    @foreach ($services as $service)
+                                        <option value="{{ $service->id }}"
+                                            data-price="{{ formatRupiah($service->price) }}"
+                                            {{ old('service_id') == $service->id ? 'selected' : '' }}>
+                                            {{ $service->name }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="service_id">Layanan</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="price" class="form-control" id="price" placeholder="price"
+                                    value="0" readonly disabled>
+                                <label for="price">Harga</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="datetime-local" class="form-control" id="date" name="date"
+                                    value="{{ old('date') }}" placeholder="Tanggal Booking">
+                                <label for="date">Tanggal Booking</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Catatan" id="note" name="note" style="height: 155px;">{{ old('note') }}</textarea>
+                                <label for="note">Catatan</label>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        @endif
+    </div>
+
+    <div class="col-xl-6 contact">
+        <div class="row">
+            @isset($companyInfo->address)
+                <div class="col-lg-6">
+                    <div class="info-box card">
+                        <i class="bi bi-geo-alt"></i>
+                        <h3>Alamat</h3>
+                        <p>{{ $companyInfo->address }}</p>
+                    </div>
+                </div>
+            @endisset
+            @isset($companyInfo->phone)
+                <div class="col-lg-6">
+                    <div class="info-box card">
+                        <i class="bi bi-telephone"></i>
+                        <h3>Hubungi Kami</h3>
+                        <p>{{ $companyInfo->phone }}</p>
+                    </div>
+                </div>
+            @endisset
+            @isset($companyInfo->email)
+                <div class="col-lg-6">
+                    <div class="info-box card">
+                        <i class="bi bi-envelope"></i>
+                        <h3>Email</h3>
+                        <p>{{ $companyInfo->email }}</p>
+                    </div>
+                </div>
+            @endisset
+        </div>
+    </div>
+
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const serviceIdSelect = document.getElementById('service_id');
+                const priceInput = document.getElementById('price');
+
+                serviceIdSelect.addEventListener('change', function() {
+                    const selectedOption = serviceIdSelect.options[serviceIdSelect.selectedIndex];
+                    const price = selectedOption.getAttribute('data-price');
+                    priceInput.value = price;
+                });
+            });
+        </script>
     @endpush
 
-    <div class="col-12">
-        <div class="card info-card p-5">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderServiceModal"
-                    style="width: 200px">
-                Pesan Layanan
-            </button>
-
-            <h3 class="mt-3">Riwayat Pemesanan</h3>
-
-            <table class="table mt-3">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name Layanan</th>
-                    <th scope="col">Harga</th>
-                    <th scope="col">Tanggal Booking</th>
-                    <th scope="col">Catatan</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($orderedServices as $order)
-                    <tr>
-                        <th scope="row">{{ $order->id }}</th>
-                        <td>{{ $order->service->name }}</td>
-                        <td>{{ $order->service->price }}</td>
-                        <td>{{ $order->date }}</td>
-                        <td>{{ $order->note }}</td>
-                        <td>
-                            <x-dashboard.status-order-badge :status="$order->status"/>
-                        </td>
-                        <td>
-                            @if($order->status === 'completed' && $order->testimonial === null)
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ratingModal">
-                                    Rating
-                                </button>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="orderServiceModal" tabindex="-1" aria-labelledby="orderServiceModal"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content text-black">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="orderServiceModal">Pesan Layanan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('dashboard.order-service.store') }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="select-service" class="form-label">Layanan</label>
-                            <select class="form-select" aria-label="Default select example" id="select-service"
-                                    name="service_id">
-                                <option selected>Pilih Layanan</option>
-                                @foreach($services as $service)
-                                    <option value="{{ $service->id }}"
-                                            data-price="{{ $service->price }}">{{ $service->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="price" class="form-label">Harga</label>
-                            <input type="number" class="form-control" id="price" name="price" disabled id>
-                        </div>
-                        <div class="mb-3">
-                            <label for="date" class="form-label">Tanggal dan jam</label>
-                            <input type="datetime-local" class="form-control" id="date" name="date" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="note" class="form-label">Catatan</label>
-                            <textarea class="form-control" id="note" name="note" rows="3"></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="ratingModal"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content text-black">
-                <div class="modal-header">
-                    <h5 class="modal-title">Berikan Rating</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('dashboard.order-service.rating', [
-                        'order_service' => $order->id
-                        ]) }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="note" class="form-label">Rating</label>
-                            <input name="rating" class="rating-input" type="text"/>
-                        </div>
-                        <div class="mb-3">
-                            <label for="note" class="form-label">Review</label>
-                            <textarea class="form-control" id="note" name="review" rows="3"></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="{{ asset('assets/_module/jquery/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('assets/_module/kartik-v-bootstrap-star-rating/js/star-rating.js') }}" type="text/javascript">
-    </script>
-    <script src="{{ asset('assets/_module/kartik-v-bootstrap-star-rating/themes/krajee-svg/theme.min.js') }}"
-            type="text/javascript"></script>
-
-    <script>
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const selectService = document.getElementById('select-service');
-            const priceInput = document.getElementById('price');
-
-            selectService.addEventListener('change', function () {
-                const selectedService = selectService.options[selectService.selectedIndex];
-                priceInput.value = selectedService.getAttribute('data-price');
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            $(".rating-input").rating({
-                min: 0,
-                max: 5,
-                step: 1,
-                size: 'lg',
-                showClear: false, // Hide the clear button
-                showCaption: false, // Hide the caption,
-            })})
-    </script>
 </x-app-layout>
