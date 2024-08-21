@@ -15,20 +15,15 @@ class OrderManagementController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = is_numeric($request->perPage) ? $request->perPage :  10;
-        if (!empty($request->search)) {
-            $OrderServices = OrderService::filter()->orderBy('created_at', 'desc')->paginate($perPage);
-            $OrderServices->appends(['search' => $request->search]);
-        } else {
-            $OrderServices = OrderService::orderBy('created_at', 'desc')->paginate($perPage);
-        }
-        $OrderServices->load('service', 'customer', 'therapist');
-        $OrderServices->appends(['perPage' => $perPage]);
+        $user = auth()->user();
 
-        return view('dashboard.order-management.index', [
-            'OrderServices' => $OrderServices,
-            'therapists' => User::role('therapist')->get()
-        ]);
+        if ($user->hasRole('therapist')) {
+            return $this->getOrdersTherapist($request);
+        }
+
+        if ($user->hasRole('admin|superadmin')) {
+            return $this->getOrdersAdmin($request);
+        }
     }
 
     /**
@@ -44,7 +39,13 @@ class OrderManagementController extends Controller
      */
     public function show(string $id)
     {
-        $OrderService = OrderService::findOrFail($id);
+        $user = auth()->user();
+
+        if ($user->hasRole('admin|superadmin')) {
+            $OrderService = OrderService::findOrFail($id);
+        } else if ($user->hasRole('therapist')) {
+            $OrderService = OrderService::where('therapist_id', $user->id)->findOrFail($id);
+        }
         $OrderService->load('service', 'customer', 'therapist');
         return response()->json($OrderService);
     }
@@ -67,7 +68,12 @@ class OrderManagementController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        $validStatuses = ['pending', 'approved', 'completed', 'rejected', 'canceled'];
+        $user = auth()->user();
+        if ($user->hasRole('therapist')) {
+            $validStatuses = ['completed'];
+        } else if ($user->hasRole('admin|superadmin')) {
+            $validStatuses = ['pending', 'approved', 'completed', 'rejected', 'canceled'];
+        }
 
         $validator = Validator::make($request->all(), [
             'status' => ['required', 'string', Rule::in($validStatuses)],
@@ -85,6 +91,42 @@ class OrderManagementController extends Controller
         }
         $order->save();
 
-        return response()->json(['status' => 'success', 'message' => 'Status updated successfully']);
+        return response()->json(['status' => 'success', 'message' => 'Status berhasil diperbarui.']);
+    }
+
+    private function getOrdersTherapist(Request $request)
+    {
+        $user = auth()->user();
+        $perPage = is_numeric($request->perPage) ? $request->perPage :  10;
+        if (!empty($request->search)) {
+            $OrderServices = OrderService::where('therapist_id', $user->id)->filter()->orderBy('created_at', 'desc')->paginate($perPage);
+            $OrderServices->appends(['search' => $request->search]);
+        } else {
+            $OrderServices = OrderService::where('therapist_id', $user->id)->whereIn('status', ['approved', 'completed'])->orderBy('created_at', 'desc')->paginate($perPage);
+        }
+        $OrderServices->load('service', 'customer', 'therapist');
+        $OrderServices->appends(['perPage' => $perPage]);
+
+        return view('dashboard.therapist.orders.index', [
+            'OrderServices' => $OrderServices,
+        ]);
+    }
+
+    private function getOrdersAdmin(Request $request)
+    {
+        $perPage = is_numeric($request->perPage) ? $request->perPage :  10;
+        if (!empty($request->search)) {
+            $OrderServices = OrderService::filter()->orderBy('created_at', 'desc')->paginate($perPage);
+            $OrderServices->appends(['search' => $request->search]);
+        } else {
+            $OrderServices = OrderService::orderBy('created_at', 'desc')->paginate($perPage);
+        }
+        $OrderServices->load('service', 'customer', 'therapist');
+        $OrderServices->appends(['perPage' => $perPage]);
+
+        return view('dashboard.order-management.index', [
+            'OrderServices' => $OrderServices,
+            'therapists' => User::role('therapist')->get()
+        ]);
     }
 }
