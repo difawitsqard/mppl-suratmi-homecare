@@ -39,10 +39,16 @@
                 </div>
                 <div class="social-links d-none d-md-flex align-items-center">
                     @isset($companyInfo->facebook)
-                        <a href="facebook.com/{{ $companyInfo->facebook }}"><i class="bi bi-facebook"></i></a>
+                        <a href="https://facebook.com/{{ $companyInfo->facebook }}" target="_blank"><i
+                                class="bi bi-facebook"></i></a>
+                    @endisset
+                    @isset($companyInfo->whatsapp)
+                        <a href="https://api.whatsapp.com/send?phone={{ $companyInfo->whatsapp }}&text=Hallo"
+                            target="_blank"><i class="bi bi-whatsapp"></i></a>
                     @endisset
                     @isset($companyInfo->instagram)
-                        <a href="instagram.com/{{ $companyInfo->instagram }}"><i class="bi bi-instagram"></i></a>
+                        <a href="https://instagram.com/{{ $companyInfo->instagram }}" target="_blank"><i
+                                class="bi bi-instagram"></i></a>
                     @endisset
 
                 </div>
@@ -492,10 +498,16 @@
                     <h4>Follow Us</h4>
                     <div class="social-links d-flex">
                         @isset($companyInfo->facebook)
-                            <a href="facebook.com/{{ $companyInfo->facebook }}"><i class="bi bi-facebook"></i></a>
+                            <a href="https://facebook.com/{{ $companyInfo->facebook }}" target="_blank"><i
+                                    class="bi bi-facebook"></i></a>
+                        @endisset
+                        @isset($companyInfo->whatsapp)
+                            <a href="https://api.whatsapp.com/send?phone={{ $companyInfo->whatsapp }}&text=Hallo"
+                                target="_blank"><i class="bi bi-whatsapp"></i></a>
                         @endisset
                         @isset($companyInfo->instagram)
-                            <a href="instagram.com/{{ $companyInfo->instagram }}"><i class="bi bi-instagram"></i></a>
+                            <a href="https://instagram.com/{{ $companyInfo->instagram }}" target="_blank"><i
+                                    class="bi bi-instagram"></i></a>
                         @endisset
                     </div>
                 </div>
