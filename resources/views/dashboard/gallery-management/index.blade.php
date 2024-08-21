@@ -138,7 +138,7 @@
 
     <!-- Modal -->
     @push('modals')
-        <div class="modal fade" id="MyModal" tabindex="-1" aria-labelledby="MyModalLabel" aria-hidden="true">
+        <div class="modal fade" id="MyModal" tabindex="-1" aria-labelledby="MyModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -270,8 +270,7 @@
                                 modalForm.action = '';
 
                                 itemId.value = data.id;
-                                imgPreview.src = "{{ asset('') }}" + "uploads/" + data
-                                    .image_path;
+                                imgPreview.src = data.image_url;
                                 titleInput.value = data.title;
                                 descTextarea.value = data.description;
 

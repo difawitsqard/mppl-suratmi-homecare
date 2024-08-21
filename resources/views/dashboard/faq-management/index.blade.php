@@ -7,7 +7,6 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title"></h5>
-                <p>Tambahkan pertanyaan dan jawaban untuk membantu costumer dengan informasi yang sering dibutuhkan.</p>
                 <div class="d-flex justify-content-between">
                     <div class="d-flex align-items-center">
                         <div class="btn-group mb-1">
@@ -35,7 +34,7 @@
                         </div>
                         <button class="btn btn-primary mb-1 add-faq-button" data-bs-toggle="modal"
                             data-bs-target="#FAQModal" data-add-url="{{ route('dashboard.faq-management.store') }}">
-                            Tambah Faq
+                            <i class="bi bi-plus"></i> Tambah
                         </button>
                     </div>
                     <div class="d-flex align-items-center">
@@ -100,7 +99,7 @@
 
     <!-- Modal -->
     @push('modals')
-        <div class="modal fade" id="FAQModal" tabindex="-1" aria-labelledby="FAQModalLabel" aria-hidden="true">
+        <div class="modal fade" id="FAQModal" tabindex="-1" aria-labelledby="FAQModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
