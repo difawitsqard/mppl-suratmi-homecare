@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class OrderServiceRequest extends FormRequest
 {
@@ -35,6 +36,14 @@ class OrderServiceRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        $user = auth()->user();
+
+        if (!$user->address || !$user->phone_number) {
+            throw ValidationException::withMessages([
+                'customer' => 'Lengkapi alamat dan nomor telepon terlebih dahulu.',
+            ]);
+        }
+
         $this->merge([
             'customer_id' => auth()->id(),
         ]);
